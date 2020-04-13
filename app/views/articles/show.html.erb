@@ -8,5 +8,46 @@
     <%= @article.text %>
 </p>
 
+<%# comments %>
+<h2>Comments: </h2>
+<%= render @article.comments %>
+
+<%# Add comment %>
+<h2>Add a Comment: </h2>
+<%= render 'comments/form' %>
+
+
+<%# Commented for using partials, If not using partials, we can use the below  %>
+<% if false %>      
+<h2>Comments: </h2>
+<% @article.comments.each do |comment| %>
+    <p>
+        <strong>Commenter: </strong>
+        <%= comment.commenter %>
+    </p>
+    <p>
+        <strong>Comment: </strong>
+        <%= comment.body %>
+    </p>
+<% end %>
+
+<%# Add comment %>
+<h2>Add a comment:<h2>
+<%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
+    <p>
+        <%= form.label :commenter %> <br>
+        <%= form.text_field :commenter %>
+    </p>
+    <p>
+        <%= form.label :body %> <br>
+        <%= form.text_area :body %>
+    </p>
+    <p>
+        <%= form.submit %>
+    </p>
+<% end %>
+
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>
+
+<% end %>
